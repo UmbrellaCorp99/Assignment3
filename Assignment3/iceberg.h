@@ -1,19 +1,25 @@
+#ifndef ICEBERGH
+#define ICEBERGH
+#include <allegro5/allegro.h>
+#include <allegro5\allegro_primitives.h>
+#include <allegro5\allegro_image.h>
 #include "penguinDropping.h"
 class iceberg
 {
 public:
-	iceberg();
+	iceberg(int width, int HEIGHT);
 	~iceberg();
+	void drawIceberg();
 	int getHealth() { return health; }
 	int getX() { return x; }
 	int getY() { return y; }
 	int getBoundx() { return boundx; }
-	int getBoundy() { return boundy; }
+	void removeLife() {health--; }
 private:
 	int health;
 	int x;
 	int y;
 	int boundx;
-	int boundy;
+	ALLEGRO_BITMAP* image;
 };
-
+#endif

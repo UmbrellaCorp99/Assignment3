@@ -9,6 +9,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
 #include "penguinDropping.h"
+#include "iceberg.h"
 
 int main()
 {
@@ -60,6 +61,7 @@ int main()
     }
 
     penguinDropping penguin[NUM_penguin];
+    iceberg myIceberg(WIDTH, HEIGHT);
 
     //tying event queue to display, timer, and keyboard
     al_install_keyboard();
@@ -91,7 +93,8 @@ int main()
         if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
             al_draw_scaled_bitmap(background, 0, 0, 1280, 800, 0, 0, WIDTH, HEIGHT, 0);
-            al_draw_bitmap(logo, WIDTH*.4, 0, 0);
+            myIceberg.drawIceberg();
+            al_draw_bitmap(logo, WIDTH*.375, 0, 0);
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].drawPenguin();
             }

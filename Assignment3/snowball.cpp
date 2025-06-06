@@ -1,7 +1,7 @@
 #include "snowball.h"
 
 snowball::snowball() {
-
+	
 }
 snowball::~snowball() {
 
