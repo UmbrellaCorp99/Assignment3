@@ -19,8 +19,17 @@ void player::drawPlayer() {
 	al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x, y, angle, 0);
 }
 void player::rotateLeft() {
-	angle += 0.8;
+	angle -= 0.1;
+	if (angle < -1.05)
+	{
+		angle = -1.05;
+	}
 }
 void player::rotateRight() {
-	angle -= 0.8;
+	angle += 0.1;
+	
+	if (angle > 1.05)
+	{
+		angle = 1.05;
+	}
 }

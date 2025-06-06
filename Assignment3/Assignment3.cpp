@@ -25,6 +25,8 @@ int main()
     ALLEGRO_BITMAP* background = NULL;
     ALLEGRO_BITMAP* logo = NULL;
     ALLEGRO_BITMAP* base = NULL;
+    enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
+    bool keys[5] = { false, false, false, false, false };
 
     //initializing allegro and addons with error handling
     if (!al_init()) {
@@ -80,6 +82,10 @@ int main()
         al_wait_for_event(event_queue, &ev);
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
+            if (keys[LEFT])
+                myPlayer.rotateLeft();
+            if (keys[RIGHT])
+                myPlayer.rotateRight();
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].startPenguin(WIDTH, HEIGHT);
             }
@@ -93,6 +99,36 @@ int main()
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
             done = true;
+        }
+        else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+        {
+            switch (ev.keyboard.keycode)
+            {
+            case ALLEGRO_KEY_ESCAPE:
+                done = true;
+                break;
+            case ALLEGRO_KEY_LEFT:
+                keys[LEFT] = true;
+                break;
+            case ALLEGRO_KEY_RIGHT:
+                keys[RIGHT] = true;
+                break;
+            }
+        }
+        else if (ev.type == ALLEGRO_EVENT_KEY_UP)
+        {
+            switch (ev.keyboard.keycode)
+            {
+            case ALLEGRO_KEY_ESCAPE:
+                done = true;
+                break;
+            case ALLEGRO_KEY_LEFT:
+                keys[LEFT] = false;
+                break;
+            case ALLEGRO_KEY_RIGHT:
+                keys[RIGHT] = false;
+                break;
+            }
         }
         if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
