@@ -11,6 +11,7 @@
 #include "penguinDropping.h"
 #include "iceberg.h"
 #include "player.h"
+#include "snowball.h"
 
 int main()
 {
@@ -68,6 +69,7 @@ int main()
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
     player myPlayer(WIDTH, HEIGHT, myIceberg);
+    snowball MySnowball;
 
     //tying event queue to display, timer, and keyboard
     al_install_keyboard();
@@ -86,6 +88,7 @@ int main()
                 myPlayer.rotateLeft();
             if (keys[RIGHT])
                 myPlayer.rotateRight();
+            MySnowball.updateSnowball(WIDTH, HEIGHT);
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].startPenguin(WIDTH, HEIGHT);
             }
@@ -113,6 +116,10 @@ int main()
             case ALLEGRO_KEY_RIGHT:
                 keys[RIGHT] = true;
                 break;
+            case ALLEGRO_KEY_SPACE:
+                keys[SPACE] = true;
+                MySnowball.fireSnowball(myPlayer);
+                break;
             }
         }
         else if (ev.type == ALLEGRO_EVENT_KEY_UP)
@@ -128,6 +135,9 @@ int main()
             case ALLEGRO_KEY_RIGHT:
                 keys[RIGHT] = false;
                 break;
+            case ALLEGRO_KEY_SPACE:
+                keys[SPACE] = false;
+                break;
             }
         }
         if (redraw && al_is_event_queue_empty(event_queue)) {
@@ -140,6 +150,7 @@ int main()
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].drawPenguin();
             }
+            MySnowball.drawSnowball();
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
 

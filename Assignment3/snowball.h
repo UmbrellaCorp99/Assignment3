@@ -1,19 +1,22 @@
-#pragma once
+#ifndef SNOWBALLH
+#define SNOWBALLH
+
 #include "penguinDropping.h"
+#include "player.h"
 class snowball
 {
 public:
 	snowball();
 	~snowball();
 	void drawSnowball();
-	void fireSnowball();
-	void updateSnowball();
+	void fireSnowball(player &pl);
+	void updateSnowball(int WIDTH, int HEIGHT);
 	void collideSnowball(penguinDropping pd[], int csize);
 	bool getLive() { return live; }
 	int getX() { return x; }
 	int getY() { return y; }
-	int getBoundx() { return boundx; }
-	int getBoundy() { return boundy; }
+	int getBoundX() { return boundx; }
+	int getBoundY() { return boundy; }
 private:
 	bool live;
 	int x;
@@ -21,5 +24,7 @@ private:
 	int boundx;
 	int boundy;
 	int speed;
+	float radian_angle;
+	ALLEGRO_BITMAP* image;
 };
-
+#endif

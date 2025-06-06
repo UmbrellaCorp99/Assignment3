@@ -1,8 +1,6 @@
 #ifndef PLAYERH
 #define  PLAYERH
-#include <allegro5\allegro.h>
-#include <allegro5\allegro_primitives.h>
-#include <allegro5\allegro_image.h>
+
 #include "iceberg.h"
 class player
 {
@@ -12,6 +10,11 @@ public:
 	void drawPlayer();
 	void rotateLeft();
 	void rotateRight();
+	float getAngle() { return angle; }
+	int getX() { return x; }
+	int getY() { return y; }
+	int getBoundX() { return boundx; }
+	int getBoundY() { return boundy; }
 private:
 	float angle;
 	int x;
