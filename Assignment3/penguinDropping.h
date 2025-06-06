@@ -1,14 +1,23 @@
-
+#ifndef PENGUINDROPPINGH
+#define PENGUINDROPPINGH
+#include <allegro5/allegro.h>
+#include <allegro5\allegro_primitives.h>
+#include <allegro5\allegro_image.h>
 class penguinDropping
 {
 public:
 	penguinDropping();
 	~penguinDropping();
-	bool getLive() { return live; }
+	void drawPenguin();
+	void startPenguin(int WIDTH, int HEIGHT);
+	void updatePenguin();
 	int getX() { return x; }
 	int getY() { return y; }
 	int getBoundx() { return boundx; }
 	int getBoundy() { return boundy; }
+	bool getLive() { return live; }
+	void setLive(bool l) { live = l; }
+	void collide(int HEIGHT);
 private:
 	bool live;
 	int x;
@@ -16,5 +25,7 @@ private:
 	int boundx;
 	int boundy;
 	int speed;
+	ALLEGRO_BITMAP* image;
 };
+#endif
 
