@@ -32,9 +32,15 @@ void penguinDropping::updatePenguin() {
 		y += speed;
 	}
 }
-void penguinDropping::collide(int HEIGHT) {
+void penguinDropping::collide(int HEIGHT, iceberg &ice) {
 	if (live) {
-		if ((y + boundy) > HEIGHT) {
+		if (((x > ice.getX()) && x < (ice.getX() + ice.getBoundx()) ||
+			(((x + boundx) > ice.getX()) && ((x + boundx) < (ice.getX() + ice.getBoundx())))) &&
+			(y < (ice.getY())) && ((y + boundy) > (ice.getY()))) {
+			ice.removeLife();
+			live = false;
+		}
+		else if ((y + boundy) > HEIGHT) {
 			live = false;
 		}
 	}

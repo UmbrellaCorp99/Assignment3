@@ -83,7 +83,7 @@ int main()
                 penguin[i].updatePenguin();
             }
             for (int i = 0; i < NUM_penguin; i++) {
-                penguin[i].collide(HEIGHT);
+                penguin[i].collide(HEIGHT, myIceberg);
             }
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -100,6 +100,11 @@ int main()
             }
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
+
+            if (myIceberg.getHealth() == 0) {
+                done = true;
+                al_rest(5);
+            }
         }
     }
     al_destroy_display(display);

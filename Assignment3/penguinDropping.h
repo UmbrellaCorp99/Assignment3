@@ -3,6 +3,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include "iceberg.h"
 class penguinDropping
 {
 public:
@@ -17,7 +18,7 @@ public:
 	int getBoundy() { return boundy; }
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
-	void collide(int HEIGHT);
+	void collide(int HEIGHT, iceberg &ice);
 private:
 	bool live;
 	int x;
