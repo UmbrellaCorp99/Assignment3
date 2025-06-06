@@ -10,6 +10,7 @@
 #include <allegro5/allegro_native_dialog.h>
 #include "penguinDropping.h"
 #include "iceberg.h"
+#include "player.h"
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
     ALLEGRO_TIMER* timer = NULL;
     ALLEGRO_BITMAP* background = NULL;
     ALLEGRO_BITMAP* logo = NULL;
+    ALLEGRO_BITMAP* base = NULL;
 
     //initializing allegro and addons with error handling
     if (!al_init()) {
@@ -49,6 +51,7 @@ int main()
 
     background = al_load_bitmap("background1280.png");
     logo = al_load_bitmap("Doom_1.png");
+    base = al_load_bitmap("launcherBase.png");
 
     event_queue = al_create_event_queue();
     timer = al_create_timer(1.0 / FPS);
@@ -62,6 +65,7 @@ int main()
 
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
+    player myPlayer(WIDTH, HEIGHT, myIceberg);
 
     //tying event queue to display, timer, and keyboard
     al_install_keyboard();
@@ -94,6 +98,8 @@ int main()
             redraw = false;
             al_draw_scaled_bitmap(background, 0, 0, 1280, 800, 0, 0, WIDTH, HEIGHT, 0);
             myIceberg.drawIceberg();
+            myPlayer.drawPlayer();
+            al_draw_bitmap(base, (myIceberg.getX() + (myIceberg.getBoundx() / 2)) - (al_get_bitmap_width(base)/2), myIceberg.getY() - al_get_bitmap_height(base), 0 );
             al_draw_bitmap(logo, WIDTH*.375, 0, 0);
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].drawPenguin();
@@ -112,6 +118,7 @@ int main()
     al_destroy_timer(timer);
     al_destroy_bitmap(background);
     al_destroy_bitmap(logo);
+    al_destroy_bitmap(base);
 }
 
 

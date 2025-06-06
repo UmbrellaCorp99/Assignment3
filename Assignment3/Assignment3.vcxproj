@@ -139,6 +139,7 @@
     <ClCompile Include="Assignment3.cpp" />
     <ClCompile Include="iceberg.cpp" />
     <ClCompile Include="penguinDropping.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="snowball.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="iceberg.h" />
     <ClInclude Include="penguinDropping.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="snowball.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
