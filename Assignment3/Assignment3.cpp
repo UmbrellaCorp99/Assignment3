@@ -18,12 +18,14 @@
 
 int main()
 {
+    //variables used throughout main
     const int FPS = 60;
     int WIDTH = 1280;
     int HEIGHT = 720;
     const int NUM_penguin = 5;
     const int NUM_snowballs = 3;
     bool done = false, redraw = false;
+    //display, timer, event queue, bitmaps, and audio pointers created
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
@@ -69,13 +71,17 @@ int main()
     if (!al_reserve_samples(14)) {
         exit(9);
     }
+
+    //loading two samples to play, one for bg music and one for game over
     sample = al_load_sample("03. E1M1 - At Doom's Gate.mp3");
     death = al_load_sample("dspldeth.wav");
 
+    //background, logo, and cannon base bitmaps
     background = al_load_bitmap("background1280.png");
     logo = al_load_bitmap("Doom_1.png");
     base = al_load_bitmap("launcherBase.png");
 
+    //setting up event queue and fonts
     event_queue = al_create_event_queue();
     timer = al_create_timer(1.0 / FPS);
     srand(time(NULL));
@@ -92,6 +98,7 @@ int main()
     ALLEGRO_FONT* gameplayFont = al_load_font("Doom2016Left-RpJDA.ttf", 32, 0);
     ALLEGRO_FONT* endFont = al_load_font("Doom2016Left-RpJDA.ttf", 128, 0);
 
+    //instantiating dropppingPenguin objects, snowball objects, a player, and an iceberg
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
     player myPlayer(WIDTH, HEIGHT, myIceberg);
@@ -103,34 +110,43 @@ int main()
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
+    //start the timer and start playing bg music on a loop
     al_start_timer(timer);
     al_play_sample(sample, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
+
+        //The next thing in the queue is a timer event
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             redraw = true;
             if (keys[LEFT])
                 myPlayer.rotateLeft();
             if (keys[RIGHT])
                 myPlayer.rotateRight();
+            //fire snowball if spacebar is pressed (holding spacebar will continue to call it subsequently) 
             if(keys[SPACE])
                 for (int i = 0; i < NUM_snowballs; i++) {
                     MySnowball[i].fireSnowball(myPlayer);
                 }
+            //change the current x and y position of a fired snowball
             for (int i = 0; i < NUM_snowballs; i++) {
                 MySnowball[i].updateSnowball(WIDTH);
             }
+            //generate the x and y pos for a new droppingPenguin
             for (int i = 0; i < NUM_penguin; i++) {
-                penguin[i].startPenguin(WIDTH, HEIGHT);
+                penguin[i].startPenguin(WIDTH);
             }
+            //change the current x and y pos of all live droppingPenguin
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].updatePenguin();
             }
+            //check to see if a snowball touches a droppingPenguin
             for (int i = 0; i < NUM_snowballs; i++) {
                 MySnowball[i].collideSnowball(penguin, NUM_penguin, myIceberg);
             }
+            //check to see if a droppingPenguin touches the iceberg
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].collide(HEIGHT, myIceberg);
             }
@@ -139,6 +155,7 @@ int main()
         {
             done = true;
         }
+        //next two if statements check for keyboard input
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
         {
             switch (ev.keyboard.keycode)
@@ -175,6 +192,7 @@ int main()
                 break;
             }
         }
+        //if event queue is empty, draw new bitmaps at updated locations
         if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
             al_draw_scaled_bitmap(background, 0, 0, 1280, 800, 0, 0, WIDTH, HEIGHT, 0);
@@ -192,7 +210,7 @@ int main()
             }
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
-
+            //if iceberg health reaches 0, play audio and print messages
             if (myIceberg.getHealth() == 0) {
                 al_draw_text(endFont, al_map_rgb(255, 255, 0), WIDTH*.4, HEIGHT*.3, 0, "YOU DIED");
                 al_draw_textf(endFont, al_map_rgb(255, 255, 0), WIDTH * .33, HEIGHT*.5, 0, "Final Score: %i", myIceberg.getScore());
@@ -203,6 +221,7 @@ int main()
             }
         }
     }
+    //clear up memory by destroying the pointers
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
     al_destroy_timer(timer);

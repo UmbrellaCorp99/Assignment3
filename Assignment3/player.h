@@ -10,6 +10,7 @@ public:
 	void drawPlayer();
 	void rotateLeft();
 	void rotateRight();
+	//getters and setters for the player class
 	float getAngle() { return angle; }
 	int getX() { return x; }
 	int getY() { return y; }

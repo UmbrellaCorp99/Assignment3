@@ -13,6 +13,7 @@ public:
 	void fireSnowball(player &pl);
 	void updateSnowball(int WIDTH);
 	void collideSnowball(penguinDropping pd[], int csize, iceberg &ice);
+	//getters and setters for the iceberg class
 	bool getLive() { return live; }
 	int getX() { return x; }
 	int getY() { return y; }

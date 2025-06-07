@@ -8,8 +8,9 @@ public:
 	penguinDropping();
 	~penguinDropping();
 	void drawPenguin();
-	void startPenguin(int WIDTH, int HEIGHT);
+	void startPenguin(int WIDTH);
 	void updatePenguin();
+	//getters and setters for the droppingPenguin class
 	int getX() { return x; }
 	int getY() { return y; }
 	int getBoundx() { return boundx; }
