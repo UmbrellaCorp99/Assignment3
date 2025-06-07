@@ -19,6 +19,7 @@ int main()
     int WIDTH = 1280;
     int HEIGHT = 720;
     const int NUM_penguin = 5;
+    const int NUM_snowballs = 3;
     bool done = false, redraw = false;
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
@@ -74,7 +75,7 @@ int main()
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
     player myPlayer(WIDTH, HEIGHT, myIceberg);
-    snowball MySnowball;
+    snowball MySnowball[3];
 
     //tying event queue to display, timer, and keyboard
     al_install_keyboard();
@@ -93,7 +94,9 @@ int main()
                 myPlayer.rotateLeft();
             if (keys[RIGHT])
                 myPlayer.rotateRight();
-            MySnowball.updateSnowball(WIDTH);
+            for (int i = 0; i < NUM_snowballs; i++) {
+                MySnowball[i].updateSnowball(WIDTH);
+            }
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].startPenguin(WIDTH, HEIGHT);
             }
@@ -103,7 +106,9 @@ int main()
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].collide(HEIGHT, myIceberg);
             }
-            MySnowball.collideSnowball(penguin, NUM_penguin, myIceberg);
+            for (int i = 0; i < NUM_snowballs; i++) {
+                MySnowball[i].collideSnowball(penguin, NUM_penguin, myIceberg);
+            }
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
@@ -124,7 +129,9 @@ int main()
                 break;
             case ALLEGRO_KEY_SPACE:
                 keys[SPACE] = true;
-                MySnowball.fireSnowball(myPlayer);
+                for (int i = 0; i < NUM_snowballs; i++) {
+                    MySnowball[i].fireSnowball(myPlayer);
+                }
                 break;
             }
         }
@@ -150,7 +157,9 @@ int main()
             redraw = false;
             al_draw_scaled_bitmap(background, 0, 0, 1280, 800, 0, 0, WIDTH, HEIGHT, 0);
             myIceberg.drawIceberg();
-            MySnowball.drawSnowball();
+            for (int i = 0; i < NUM_snowballs; i++) {
+                MySnowball[i].drawSnowball();
+            }
             myPlayer.drawPlayer();
             al_draw_textf(gameplayFont, al_map_rgb(255, 255, 0), WIDTH * .2, HEIGHT * .1, 0, "Score: %i", myIceberg.getScore());
             al_draw_textf(gameplayFont, al_map_rgb(255, 255, 0), WIDTH * .7, HEIGHT * .1, 0, "Health: %i", myIceberg.getHealth());
