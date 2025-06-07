@@ -32,8 +32,8 @@ int main()
     ALLEGRO_BITMAP* base = NULL;
     ALLEGRO_SAMPLE* sample = NULL;
     ALLEGRO_SAMPLE* death = NULL;
-    enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
-    bool keys[5] = { false, false, false, false, false };
+    enum KEYS {LEFT, RIGHT, SPACE };
+    bool keys[5] = {false, false, false };
 
     //initializing allegro and addons with error handling
     if (!al_init()) {
