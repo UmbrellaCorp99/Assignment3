@@ -21,17 +21,17 @@ void snowball::drawSnowball() {
 }
 void snowball::fireSnowball(player &pl) {
 	if (!live) {
-		x = pl.getX() + pl.getBoundX() / 2;
-		y = pl.getY() + pl.getBoundY() / 2;
-		radian_angle = ((pl.getAngle() + 64.0) / 0.711) * ((2 * 3.1415) / 360.0);
+		x = pl.getX();
+		y = pl.getY();
+		radian_angle = -pl.getAngle() + 1.57;
 		live = true;
 	}
 }
-void snowball::updateSnowball(int WIDTH, int HEIGHT) {
+void snowball::updateSnowball(int WIDTH) {
 	if (live) {
-		x -= speed * cos(radian_angle);
+		x += speed * cos(radian_angle);
 		y -= speed * sin(radian_angle);
-		if (y < 0) {
+		if (y < 0 || x > WIDTH || x < 0) {
 			live = false;
 		}
 	}

@@ -10,7 +10,7 @@ public:
 	~snowball();
 	void drawSnowball();
 	void fireSnowball(player &pl);
-	void updateSnowball(int WIDTH, int HEIGHT);
+	void updateSnowball(int WIDTH);
 	void collideSnowball(penguinDropping pd[], int csize);
 	bool getLive() { return live; }
 	int getX() { return x; }

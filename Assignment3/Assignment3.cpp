@@ -88,7 +88,7 @@ int main()
                 myPlayer.rotateLeft();
             if (keys[RIGHT])
                 myPlayer.rotateRight();
-            MySnowball.updateSnowball(WIDTH, HEIGHT);
+            MySnowball.updateSnowball(WIDTH);
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].startPenguin(WIDTH, HEIGHT);
             }
@@ -144,13 +144,13 @@ int main()
             redraw = false;
             al_draw_scaled_bitmap(background, 0, 0, 1280, 800, 0, 0, WIDTH, HEIGHT, 0);
             myIceberg.drawIceberg();
+            MySnowball.drawSnowball();
             myPlayer.drawPlayer();
             al_draw_bitmap(base, (myIceberg.getX() + (myIceberg.getBoundx() / 2)) - (al_get_bitmap_width(base)/2), myIceberg.getY() - al_get_bitmap_height(base), 0 );
             al_draw_bitmap(logo, WIDTH*.375, 0, 0);
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].drawPenguin();
             }
-            MySnowball.drawSnowball();
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
