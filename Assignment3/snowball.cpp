@@ -32,7 +32,7 @@ void snowball::fireSnowball(player &pl) {
 		y = pl.getY();
 		radian_angle = -pl.getAngle() + 1.57;
 		live = true;
-		al_play_sample(fire, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample(fire, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
 void snowball::updateSnowball(int WIDTH) {
@@ -48,15 +48,18 @@ void snowball::collideSnowball(penguinDropping pd[], int csize, iceberg &ice) {
 	if (live) {
 		for (int j = 0; j < csize; j++) {
 			if(pd[j].getLive()){
-				if (x > (pd[j].getX() - pd[j].getBoundx()) &&
-					x < (pd[j].getX() + pd[j].getBoundx()) &&
-					y >(pd[j].getY() - pd[j].getBoundy()) &&
-					y < (pd[j].getY() + pd[j].getBoundy()))
+				if ((((y > pd[j].getY()) && y < (pd[j].getY() + pd[j].getBoundy()) ||
+					(((y + boundy) > pd[j].getY()) && ((y + boundy) < (pd[j].getY() + pd[j].getBoundy())))) &&
+					(x > (pd[j].getX())) && (x < (pd[j].getX() + pd[j].getBoundy()))) || (((y > pd[j].getY()) && y < (pd[j].getY() + pd[j].getBoundy()) ||
+						(((y + boundy) > pd[j].getY()) && ((y + boundy) < (pd[j].getY() + pd[j].getBoundy())))) &&
+						(x < pd[j].getX()) && ((x + boundx) > (pd[j].getX()))) || (((x > pd[j].getX()) && x < (pd[j].getX() + pd[j].getBoundy()) ||
+							(((x + boundx) > pd[j].getX()) && ((x + boundx) < (pd[j].getX() + pd[j].getBoundx())))) &&
+							(y > pd[j].getY()) && (y < (pd[j].getY() + pd[j].getBoundy()))))
 				{
 					live = false;
 					pd[j].setLive(false);
 					ice.updateScore();
-					al_play_sample(hit, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+					al_play_sample(hit, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				}
 			}
 		}

@@ -104,7 +104,7 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
     al_start_timer(timer);
-    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+    al_play_sample(sample, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     while (!done) {
         ALLEGRO_EVENT ev;
@@ -195,7 +195,7 @@ int main()
             if (myIceberg.getHealth() == 0) {
                 al_draw_text(endFont, al_map_rgb(255, 255, 0), WIDTH*.4, HEIGHT*.3, 0, "YOU DIED");
                 al_draw_textf(endFont, al_map_rgb(255, 255, 0), WIDTH * .33, HEIGHT*.5, 0, "Final Score: %i", myIceberg.getScore());
-                al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_play_sample(death, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 al_flip_display();
                 al_rest(5);
                 done = true;
