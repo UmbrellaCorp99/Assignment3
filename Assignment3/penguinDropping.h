@@ -24,6 +24,7 @@ private:
 	int boundx;
 	int boundy;
 	int speed;
+	ALLEGRO_SAMPLE* injured;
 	ALLEGRO_BITMAP* image;
 };
 #endif

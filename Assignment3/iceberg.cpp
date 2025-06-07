@@ -9,6 +9,7 @@ iceberg::iceberg(int WIDTH, int HEIGHT) {
 	x = WIDTH *.25;
 	y = HEIGHT *.85;
 	boundx = al_get_bitmap_width(image);
+	
 	score = 0;
 }
 iceberg::~iceberg() {

@@ -1,5 +1,6 @@
 // Alexander Young
 //Assingment 3
+//All sound and visual assets belong to Bethesda Softworks
 
 #include <iostream>
 #include <allegro5/allegro.h>
@@ -8,6 +9,8 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "penguinDropping.h"
 #include "iceberg.h"
 #include "player.h"
@@ -27,6 +30,8 @@ int main()
     ALLEGRO_BITMAP* background = NULL;
     ALLEGRO_BITMAP* logo = NULL;
     ALLEGRO_BITMAP* base = NULL;
+    ALLEGRO_SAMPLE* sample = NULL;
+    ALLEGRO_SAMPLE* death = NULL;
     enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
     bool keys[5] = { false, false, false, false, false };
 
@@ -51,7 +56,21 @@ int main()
         al_show_native_message_box(NULL, "Error", "Display failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
         return -1;
     }
-
+    al_install_audio();
+    if (!al_install_audio) {
+        al_show_native_message_box(NULL, "Error", "Audio failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
+    al_init_acodec_addon();
+    if (!al_init_acodec_addon()) {
+        al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
+    if (!al_reserve_samples(14)) {
+        exit(9);
+    }
+    sample = al_load_sample("03. E1M1 - At Doom's Gate.mp3");
+    death = al_load_sample("dspldeth.wav");
 
     background = al_load_bitmap("background1280.png");
     logo = al_load_bitmap("Doom_1.png");
@@ -71,6 +90,7 @@ int main()
     al_init_ttf_addon();
 
     ALLEGRO_FONT* gameplayFont = al_load_font("Doom2016Left-RpJDA.ttf", 32, 0);
+    ALLEGRO_FONT* endFont = al_load_font("Doom2016Left-RpJDA.ttf", 128, 0);
 
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
@@ -84,6 +104,7 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
     al_start_timer(timer);
+    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     while (!done) {
         ALLEGRO_EVENT ev;
@@ -172,8 +193,12 @@ int main()
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
             if (myIceberg.getHealth() == 0) {
-                done = true;
+                al_draw_text(endFont, al_map_rgb(255, 255, 0), WIDTH*.4, HEIGHT*.3, 0, "YOU DIED");
+                al_draw_textf(endFont, al_map_rgb(255, 255, 0), WIDTH * .33, HEIGHT*.5, 0, "Final Score: %i", myIceberg.getScore());
+                al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_flip_display();
                 al_rest(5);
+                done = true;
             }
         }
     }
@@ -184,6 +209,9 @@ int main()
     al_destroy_bitmap(logo);
     al_destroy_bitmap(base);
     al_destroy_font(gameplayFont);
+    al_destroy_sample(sample);
+    al_destroy_sample(death);
+    al_destroy_font(endFont);
 }
 
 

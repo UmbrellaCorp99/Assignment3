@@ -20,6 +20,7 @@ private:
 	int x;
 	int y;
 	int boundx;
+	
 	ALLEGRO_BITMAP* image;
 };
 #endif

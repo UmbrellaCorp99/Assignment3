@@ -26,6 +26,8 @@ private:
 	int boundy;
 	int speed;
 	float radian_angle;
+	ALLEGRO_SAMPLE* fire;
+	ALLEGRO_SAMPLE* hit;
 	ALLEGRO_BITMAP* image;
 };
 #endif

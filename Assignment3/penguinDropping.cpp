@@ -1,10 +1,13 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "penguinDropping.h"
 
 penguinDropping::penguinDropping() {
 	image = al_load_bitmap("skull150.png");
+	injured = al_load_sample("dsoof.wav");
 	live = false;
 	speed = 5;
 	boundx = al_get_bitmap_width(image) * .9;
@@ -12,6 +15,7 @@ penguinDropping::penguinDropping() {
 }
 penguinDropping::~penguinDropping() {
 	al_destroy_bitmap(image);
+	al_destroy_sample(injured);
 }
 void penguinDropping::drawPenguin() {
 	if (live) {
@@ -38,6 +42,7 @@ void penguinDropping::collide(int HEIGHT, iceberg &ice) {
 			(((x + boundx) > ice.getX()) && ((x + boundx) < (ice.getX() + ice.getBoundx())))) &&
 			(y < (ice.getY())) && ((y + boundy) > (ice.getY()))) {
 			ice.removeLife();
+			al_play_sample(injured, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			live = false;
 		}
 		else if ((y + boundy) > HEIGHT) {
