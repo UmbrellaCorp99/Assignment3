@@ -42,7 +42,7 @@ void penguinDropping::collide(int HEIGHT, iceberg &ice) {
 			(((x + boundx) > ice.getX()) && ((x + boundx) < (ice.getX() + ice.getBoundx())))) &&
 			(y < (ice.getY())) && ((y + boundy) > (ice.getY()))) {
 			ice.removeLife();
-			al_play_sample(injured, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+			al_play_sample(injured, 1.4, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			live = false;
 		}
 		else if ((y + boundy) > HEIGHT) {

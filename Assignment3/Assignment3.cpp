@@ -95,7 +95,7 @@ int main()
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
     player myPlayer(WIDTH, HEIGHT, myIceberg);
-    snowball MySnowball[3];
+    snowball MySnowball[5];
 
     //tying event queue to display, timer, and keyboard
     al_install_keyboard();
@@ -115,6 +115,10 @@ int main()
                 myPlayer.rotateLeft();
             if (keys[RIGHT])
                 myPlayer.rotateRight();
+            if(keys[SPACE])
+                for (int i = 0; i < NUM_snowballs; i++) {
+                    MySnowball[i].fireSnowball(myPlayer);
+                }
             for (int i = 0; i < NUM_snowballs; i++) {
                 MySnowball[i].updateSnowball(WIDTH);
             }
@@ -124,11 +128,11 @@ int main()
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].updatePenguin();
             }
-            for (int i = 0; i < NUM_penguin; i++) {
-                penguin[i].collide(HEIGHT, myIceberg);
-            }
             for (int i = 0; i < NUM_snowballs; i++) {
                 MySnowball[i].collideSnowball(penguin, NUM_penguin, myIceberg);
+            }
+            for (int i = 0; i < NUM_penguin; i++) {
+                penguin[i].collide(HEIGHT, myIceberg);
             }
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -150,9 +154,6 @@ int main()
                 break;
             case ALLEGRO_KEY_SPACE:
                 keys[SPACE] = true;
-                for (int i = 0; i < NUM_snowballs; i++) {
-                    MySnowball[i].fireSnowball(myPlayer);
-                }
                 break;
             }
         }
