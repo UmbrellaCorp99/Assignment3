@@ -66,6 +66,11 @@ int main()
         return -1;
     }
 
+    al_init_font_addon();
+    al_init_ttf_addon();
+
+    ALLEGRO_FONT* gameplayFont = al_load_font("Doom2016Left-RpJDA.ttf", 32, 0);
+
     penguinDropping penguin[NUM_penguin];
     iceberg myIceberg(WIDTH, HEIGHT);
     player myPlayer(WIDTH, HEIGHT, myIceberg);
@@ -98,7 +103,7 @@ int main()
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].collide(HEIGHT, myIceberg);
             }
-            MySnowball.collideSnowball(penguin, NUM_penguin);
+            MySnowball.collideSnowball(penguin, NUM_penguin, myIceberg);
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
@@ -147,6 +152,8 @@ int main()
             myIceberg.drawIceberg();
             MySnowball.drawSnowball();
             myPlayer.drawPlayer();
+            al_draw_textf(gameplayFont, al_map_rgb(255, 255, 0), WIDTH * .2, HEIGHT * .1, 0, "Score: %i", myIceberg.getScore());
+            al_draw_textf(gameplayFont, al_map_rgb(255, 255, 0), WIDTH * .7, HEIGHT * .1, 0, "Health: %i", myIceberg.getHealth());
             al_draw_bitmap(base, (myIceberg.getX() + (myIceberg.getBoundx() / 2)) - (al_get_bitmap_width(base)/2), myIceberg.getY() - al_get_bitmap_height(base), 0 );
             al_draw_bitmap(logo, WIDTH*.375, 0, 0);
             for (int i = 0; i < NUM_penguin; i++) {
@@ -167,6 +174,7 @@ int main()
     al_destroy_bitmap(background);
     al_destroy_bitmap(logo);
     al_destroy_bitmap(base);
+    al_destroy_font(gameplayFont);
 }
 
 

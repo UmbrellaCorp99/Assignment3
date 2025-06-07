@@ -3,6 +3,7 @@
 
 #include "penguinDropping.h"
 #include "player.h"
+#include "iceberg.h"
 class snowball
 {
 public:
@@ -11,7 +12,7 @@ public:
 	void drawSnowball();
 	void fireSnowball(player &pl);
 	void updateSnowball(int WIDTH);
-	void collideSnowball(penguinDropping pd[], int csize);
+	void collideSnowball(penguinDropping pd[], int csize, iceberg &ice);
 	bool getLive() { return live; }
 	int getX() { return x; }
 	int getY() { return y; }

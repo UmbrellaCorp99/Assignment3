@@ -36,7 +36,7 @@ void snowball::updateSnowball(int WIDTH) {
 		}
 	}
 }
-void snowball::collideSnowball(penguinDropping pd[], int csize) {
+void snowball::collideSnowball(penguinDropping pd[], int csize, iceberg &ice) {
 	if (live) {
 		for (int j = 0; j < csize; j++) {
 			if(pd[j].getLive()){
@@ -47,6 +47,7 @@ void snowball::collideSnowball(penguinDropping pd[], int csize) {
 				{
 					live = false;
 					pd[j].setLive(false);
+					ice.updateScore();
 				}
 			}
 		}

@@ -12,8 +12,11 @@ public:
 	int getY() { return y; }
 	int getBoundx() { return boundx; }
 	void removeLife() {health--; }
+	void updateScore() { score++; }
+	int getScore() { return score; }
 private:
 	int health;
+	int score;
 	int x;
 	int y;
 	int boundx;
