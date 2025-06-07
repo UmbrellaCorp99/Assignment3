@@ -214,6 +214,7 @@ int main()
             if (myIceberg.getHealth() == 0) {
                 al_draw_text(endFont, al_map_rgb(255, 255, 0), WIDTH*.4, HEIGHT*.3, 0, "YOU DIED");
                 al_draw_textf(endFont, al_map_rgb(255, 255, 0), WIDTH * .33, HEIGHT*.5, 0, "Final Score: %i", myIceberg.getScore());
+                al_draw_text(gameplayFont, al_map_rgb(255, 255, 0), WIDTH/2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "All visual and audio assets belong to Bethesda Softworks");
                 al_play_sample(death, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 al_flip_display();
                 al_rest(5);
