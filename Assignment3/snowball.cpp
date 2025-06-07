@@ -6,7 +6,7 @@
 
 snowball::snowball() {
 	image = al_load_bitmap("shotFired.png");
-	speed = 5;
+	speed = 10;
 	live = false;
 	radian_angle = 0;
 
@@ -37,5 +37,18 @@ void snowball::updateSnowball(int WIDTH) {
 	}
 }
 void snowball::collideSnowball(penguinDropping pd[], int csize) {
-	
+	if (live) {
+		for (int j = 0; j < csize; j++) {
+			if(pd[j].getLive()){
+				if (x > (pd[j].getX() - pd[j].getBoundx()) &&
+					x < (pd[j].getX() + pd[j].getBoundx()) &&
+					y >(pd[j].getY() - pd[j].getBoundy()) &&
+					y < (pd[j].getY() + pd[j].getBoundy()))
+				{
+					live = false;
+					pd[j].setLive(false);
+				}
+			}
+		}
+	}
 }

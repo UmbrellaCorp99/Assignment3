@@ -98,6 +98,7 @@ int main()
             for (int i = 0; i < NUM_penguin; i++) {
                 penguin[i].collide(HEIGHT, myIceberg);
             }
+            MySnowball.collideSnowball(penguin, NUM_penguin);
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {

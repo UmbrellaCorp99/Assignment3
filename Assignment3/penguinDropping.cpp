@@ -7,8 +7,8 @@ penguinDropping::penguinDropping() {
 	image = al_load_bitmap("skull150.png");
 	live = false;
 	speed = 5;
-	boundx = al_get_bitmap_width(image);
-	boundy = al_get_bitmap_height(image);
+	boundx = al_get_bitmap_width(image) * .9;
+	boundy = al_get_bitmap_height(image) * .9;
 }
 penguinDropping::~penguinDropping() {
 	al_destroy_bitmap(image);
